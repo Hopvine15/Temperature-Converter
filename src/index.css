@@ -1,0 +1,79 @@
+@import '@carbon/react/index.scss';
+
+@import "tailwindcss";
+
+/* IBM Plex Fonts */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans: wght@300;400;500;600;700&family=IBM+Plex+Mono: wght@400;500;600&display=swap');
+
+/* CSS Custom Properties for Colors */
+:root {
+  --carbon-blue-60: #0f62fe;
+  --carbon-gray-100: #161616;
+  --carbon-gray-70: #525252;
+  --carbon-gray-20: #e0e0e0;
+  --carbon-gray-10: #f4f4f4;
+
+  --temp-freezing: #a6c8ff;
+  --temp-mild: #ffd666;
+  --temp-hot: #fa4d56;
+  --temp-extreme: #da1e28;
+}
+
+@layer utilities {
+  .bg-carbon-blue-60 {
+    background-color: var(--carbon-blue-60);
+  }
+
+  .text-carbon-gray-100 {
+    color: var(--carbon-gray-100);
+  }
+
+  .border-carbon-gray-20 {
+    border-color: var(--carbon-gray-20);
+  }
+
+  .bg-carbon-gray-100 {
+    background-color: var(--carbon-gray-100);
+  }
+
+  .bg-temp-freezing {
+    background-color: var(--temp-freezing);
+  }
+
+  .bg-temp-mild {
+    background-color: var(--temp-mild);
+  }
+
+  .bg-temp-hot {
+    background-color: var(--temp-hot);
+  }
+
+  .bg-temp-extreme {
+    background-color: var(--temp-extreme);
+  }
+}
+
+/* custom Components */
+.weather-card {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  border: 1px solid var(--carbon-gray-20);
+  margin-bottom: 1.5rem;
+}
+
+.metric-card {
+  background: var(--carbon-gray-10);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  border-left: 4px solid var(--carbon-blue-60);
+}
+
+/* global Styles */
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: var(--carbon-gray-10);
+}
