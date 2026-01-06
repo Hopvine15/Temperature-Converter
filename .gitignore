@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 
+.env
+
 # Ensure that vscode settings are not committed - so that do not interrupt
 .vscode
 !.vscode/settings.json
