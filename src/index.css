@@ -1,15 +1,15 @@
-@import '@carbon/react/index.scss';
+@import "tailwindcss" important;
 
-@import "tailwindcss";
-
-/* IBM Plex Fonts */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans: wght@300;400;500;600;700&family=IBM+Plex+Mono: wght@400;500;600&display=swap');
-
-/* CSS Custom Properties for Colors */
 :root {
   --carbon-blue-60: #0f62fe;
   --carbon-gray-100: #161616;
+  --carbon-gray-90: #262626;
+  --carbon-gray-80: #393939;
   --carbon-gray-70: #525252;
+  --carbon-gray-60: #6f6f6f;
+  --carbon-gray-50: #a8a8a8;
+  --carbon-gray-40: #8d8d8d;
+  --carbon-gray-30: #c6c6c6;
   --carbon-gray-20: #e0e0e0;
   --carbon-gray-10: #f4f4f4;
 
@@ -20,20 +20,92 @@
 }
 
 @layer utilities {
-  .bg-carbon-blue-60 {
-    background-color: var(--carbon-blue-60);
+  /* Background utilities */
+  [class^="bg-carbon-"],
+  [class*=" bg-carbon-"] {
+    background-color: var(--carbon-token);
   }
 
-  .text-carbon-gray-100 {
-    color: var(--carbon-gray-100);
+  /* Text utilities */
+  [class^="text-carbon-"],
+  [class*=" text-carbon-"] {
+    color: var(--carbon-token);
   }
 
+  /* Border utilities */
+  [class^="border-carbon-"],
+  [class*=" border-carbon-"] {
+    border-color: var(--carbon-token);
+  }
+}
+
+@layer utilities {
+  /* Blue */
+  .bg-carbon-blue-60,
+  .text-carbon-blue-60,
+  .border-carbon-blue-60 {
+    --carbon-token: var(--carbon-blue-60);
+  }
+
+  /* Grays */
+  .bg-carbon-gray-100,
+  .text-carbon-gray-100,
+  .border-carbon-gray-100 {
+    --carbon-token: var(--carbon-gray-100);
+  }
+
+  .bg-carbon-gray-90,
+  .text-carbon-gray-90,
+  .border-carbon-gray-90 {
+    --carbon-token: var(--carbon-gray-90);
+  }
+
+  .bg-carbon-gray-80,
+  .text-carbon-gray-80,
+  .border-carbon-gray-80 {
+    --carbon-token: var(--carbon-gray-80);
+  }
+
+  .bg-carbon-gray-70,
+  .text-carbon-gray-70,
+  .border-carbon-gray-70 {
+    --carbon-token: var(--carbon-gray-70);
+  }
+
+  .bg-carbon-gray-60,
+  .text-carbon-gray-60,
+  .border-carbon-gray-60 {
+    --carbon-token: var(--carbon-gray-60);
+  }
+
+  .bg-carbon-gray-50,
+  .text-carbon-gray-50,
+  .border-carbon-gray-50 {
+    --carbon-token: var(--carbon-gray-50);
+  }
+
+  .bg-carbon-gray-40,
+  .text-carbon-gray-40,
+  .border-carbon-gray-40 {
+    --carbon-token: var(--carbon-gray-40);
+  }
+
+  .bg-carbon-gray-30,
+  .text-carbon-gray-30,
+  .border-carbon-gray-30 {
+    --carbon-token: var(--carbon-gray-30);
+  }
+
+  .bg-carbon-gray-20,
+  .text-carbon-gray-20,
   .border-carbon-gray-20 {
-    border-color: var(--carbon-gray-20);
+    --carbon-token: var(--carbon-gray-20);
   }
 
-  .bg-carbon-gray-100 {
-    background-color: var(--carbon-gray-100);
+  .bg-carbon-gray-10,
+  .text-carbon-gray-10,
+  .border-carbon-gray-10 {
+    --carbon-token: var(--carbon-gray-10);
   }
 
   .bg-temp-freezing {
