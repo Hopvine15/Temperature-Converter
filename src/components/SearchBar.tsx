@@ -1,7 +1,7 @@
 import { Search, Theme } from "@carbon/react";
 import { useState, useEffect, useCallback } from "react";
 import type { Location } from "../types/location";
-import { COUNTRY_NAME_BY_CODE } from "../data/countries"; // <-- add this
+import { COUNTRY_NAME_BY_CODE } from "../data/countries";
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
