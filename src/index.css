@@ -7,8 +7,8 @@
   --carbon-gray-80: #393939;
   --carbon-gray-70: #525252;
   --carbon-gray-60: #6f6f6f;
-  --carbon-gray-50: #a8a8a8;
-  --carbon-gray-40: #8d8d8d;
+  --carbon-gray-50: #8a8a8a;
+  --carbon-gray-40: #a8a8a8;
   --carbon-gray-30: #c6c6c6;
   --carbon-gray-20: #e0e0e0;
   --carbon-gray-10: #f4f4f4;
@@ -19,6 +19,7 @@
   --temp-extreme: #da1e28;
 }
 
+/* Rules for the carbon design system tokens so easily used with Tailwind CSS */
 @layer utilities {
   /* Background utilities */
   [class^="bg-carbon-"],

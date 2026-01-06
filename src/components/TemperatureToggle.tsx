@@ -5,8 +5,8 @@ interface TemperatureToggleProps {
 
 export function TemperatureToggle({ primaryUnit, setPrimaryUnit }: TemperatureToggleProps) {
   return (
-    <div className="flex items-center gap-3 bg-carbon-gray-80 px-4 py-2 rounded-lg">
-      <span className={`text-sm font-medium transition-colors ${primaryUnit === 'celsius' ? 'text-white' : 'text-carbon-gray-40'}`}>
+    <div className="flex items-center gap-3 bg-carbon-gray-80 px-4 py-1.5 rounded-lg">
+      <span className={`text-sm font-medium transition-colors ${primaryUnit === 'celsius' ? 'text-white' : 'text-carbon-gray-50'}`}>
         &deg;C
       </span>
       <button
@@ -21,7 +21,7 @@ export function TemperatureToggle({ primaryUnit, setPrimaryUnit }: TemperatureTo
           }`}
         />
       </button>
-      <span className={`text-sm font-medium transition-colors ${primaryUnit === 'fahrenheit' ? 'text-white' : 'text-carbon-gray-40'}`}>
+      <span className={`text-sm font-medium transition-colors ${primaryUnit === 'fahrenheit' ? 'text-white' : 'text-carbon-gray-50'}`}>
         &deg;F
       </span>
     </div>
