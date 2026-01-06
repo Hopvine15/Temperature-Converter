@@ -23,7 +23,7 @@ export function Header({
         aria-label="Global Weather Monitor"
         className="min-h-35 md:min-h-18 sticky top-0 z-50"
       >
-        <div className="w-full max-w-6xl mx-auto! px-3 sm:px-4 md:px-8 py-5 md:py-4">
+        <div className="w-full max-w-8xl mx-auto! px-3 sm:px-4 md:px-16 py-5 md:py-4">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             {/* Left: Icon + Title + Subtitle */}
             <div className="flex min-w-0 items-start sm:items-center gap-3">
