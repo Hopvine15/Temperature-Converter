@@ -13,12 +13,15 @@
     "@carbon/icons-react": "^11.71.0",
     "@carbon/react": "^1.97.0",
     "@tailwindcss/vite": "^4.1.18",
+    "leaflet": "^1.9.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-leaflet": "^5.0.0",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@types/leaflet": "^1.9.21",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",

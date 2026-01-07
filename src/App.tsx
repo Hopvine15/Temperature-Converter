@@ -1,9 +1,11 @@
 import { useState } from "react";
+import "leaflet/dist/leaflet.css";
 import { Header } from "./components/Header";
 import { Location as LocationPin } from "@carbon/icons-react";
 import type { Location } from "./types/location";
 import { COUNTRY_NAME_BY_CODE } from "./data/countries";
 import { TemperatureCard } from "./components/TemperatureCard";
+import { MapCard } from "./components/MapCard";
 
 type TemperatureUnit = "celsius" | "fahrenheit";
 
@@ -12,7 +14,7 @@ function App() {
   const [location, setLocation] = useState<Location | null>(null);
 
   const countryName = location?.country
-    ? COUNTRY_NAME_BY_CODE[location.country] ?? location.country
+    ? (COUNTRY_NAME_BY_CODE[location.country] ?? location.country)
     : undefined;
 
   const mockConditions = {
@@ -45,7 +47,7 @@ function App() {
           </div>
         </div>
 
-        <div className="my-4">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_560px] gap-4 my-4 items-start">
           <div className="bg-white border border-carbon-gray-20">
             <div className="border-b border-carbon-gray-20 px-6 py-4">
               <h2 className="text-carbon-gray-100 text-lg m-0">
@@ -56,6 +58,14 @@ function App() {
               <TemperatureCard primaryUnit={primaryUnit} {...mockConditions} />
             </div>
           </div>
+
+          {/* Location map */}
+          <MapCard
+            lat={location?.lat}
+            lon={location?.lon}
+            locationName={location?.name}
+            countryName={countryName}
+          />
         </div>
       </main>
     </div>
