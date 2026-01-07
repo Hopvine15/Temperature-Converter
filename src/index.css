@@ -126,16 +126,6 @@
   }
 }
 
-/* custom Components */
-.weather-card {
-  width: 100%;
-  background: white;
-  padding: 1.5rem;
-  border: 1px solid var(--carbon-gray-20);
-  border-radius: 0.25rem;
-  margin-bottom: 1.5rem;
-}
-
 .metric-card {
   background: var(--carbon-gray-10);
   border-radius: 0.5rem;
@@ -149,4 +139,17 @@ body {
   margin: 0;
   padding: 0;
   background: var(--carbon-gray-10);
+}
+
+/* Leaflet map tooltip for location pin */
+.map-pin-tooltip {
+  background-color: #161616;
+  color: #ffffff;
+  border: 1px solid #161616;
+  padding: 4px 8px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.map-pin-tooltip::before {
+  display: none;
 }
