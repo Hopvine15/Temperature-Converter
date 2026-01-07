@@ -128,11 +128,11 @@
 
 /* custom Components */
 .weather-card {
+  width: 100%;
   background: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
   border: 1px solid var(--carbon-gray-20);
+  border-radius: 0.25rem;
   margin-bottom: 1.5rem;
 }
 
