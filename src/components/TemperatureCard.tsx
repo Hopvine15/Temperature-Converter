@@ -81,6 +81,12 @@ export function TemperatureCard({
         </div>
       </div>
       <MetricCards />
+      <div className="border border-carbon-gray-20 bg-carbon-gray-20 px-3 py-2 text-xs text-carbon-gray-70">
+        <span className="font-semibold text-carbon-gray-90">Last updated:</span>{" "}
+        <span className="text-carbon-gray-70">
+          2025-01-09 12:00 GMT (UTC+0)
+        </span>
+      </div>
     </div>
   );
 }
