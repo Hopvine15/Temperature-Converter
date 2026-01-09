@@ -13,18 +13,11 @@ delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
     "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  iconUrl:
-    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  shadowUrl:
-    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 
-export function MapCard({
-  lat,
-  lon,
-  locationName,
-  countryName,
-}: MapCardProps) {
+export function MapCard({ lat, lon, locationName, countryName }: MapCardProps) {
   const hasLocation = lat !== undefined && lon !== undefined;
   const locationLabel = locationName
     ? `${locationName}${countryName ? `, ${countryName}` : ""}`
@@ -105,7 +98,7 @@ export function MapCard({
                   </p>
                 </div>
               </div>
-              <div className="rounded-sm border border-carbon-gray-20 bg-carbon-gray-10 px-3 py-2 text-xs text-carbon-gray-70">
+              <div className="border border-carbon-gray-20 bg-carbon-gray-20 px-3 py-2 text-xs text-carbon-gray-70">
                 <span className="font-semibold text-carbon-gray-90">
                   Projection:
                 </span>{" "}

@@ -1,3 +1,4 @@
+import { MetricCards } from "./MetricCards";
 type TemperatureUnit = "celsius" | "fahrenheit";
 
 interface TemperatureCardProps {
@@ -79,6 +80,7 @@ export function TemperatureCard({
           </p>
         </div>
       </div>
+      <MetricCards />
     </div>
   );
 }
