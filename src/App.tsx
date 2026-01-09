@@ -47,14 +47,14 @@ function App() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_560px] gap-4 my-4 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_560px] gap-4 my-4 items-start lg:items-end">
           <div className="bg-white border border-carbon-gray-20">
             <div className="border-b border-carbon-gray-20 px-6 py-4">
               <h2 className="text-carbon-gray-100 text-lg m-0">
                 Current Conditions
               </h2>
             </div>
-            <div className="p-6" aria-label="Temperature Information">
+            <div className="p-6 pb-33" aria-label="Temperature Information">
               <TemperatureCard primaryUnit={primaryUnit} {...mockConditions} />
             </div>
           </div>

@@ -22,20 +22,20 @@ export function MapCard({ lat, lon, locationName, countryName }: MapCardProps) {
   const locationLabel = locationName
     ? `${locationName}${countryName ? `, ${countryName}` : ""}`
     : "Selected location";
-  const mapZoom = 1.6;
+  const mapZoom = 2.5;
   const formatCoordinate = (value: number) => Math.abs(value).toFixed(4);
   const latDirection = lat !== undefined && lat >= 0 ? "North" : "South";
   const lonDirection = lon !== undefined && lon >= 0 ? "East" : "West";
 
   return (
-    <div className="bg-white border border-carbon-gray-20 w-full lg:w-140 self-start">
+    <div className="bg-white border border-carbon-gray-20 w-full lg:w-140">
       <div className="border-b border-carbon-gray-20 px-6 py-4">
         <h2 className="text-carbon-gray-100 text-lg m-0">Location</h2>
       </div>
 
       <div className="p-6 space-y-3">
         {/* map area */}
-        <div className="aspect-3/2 min-h-52 border border-carbon-gray-20 overflow-hidden">
+        <div className="aspect-4/2 min-h-40 border border-carbon-gray-20 overflow-hidden">
           {hasLocation ? (
             <MapContainer
               key={`${lat}-${lon}`}
