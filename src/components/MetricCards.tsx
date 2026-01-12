@@ -1,4 +1,5 @@
 import { View, WindyStrong, RainDrop, Fog } from "@carbon/icons-react";
+import type { WeatherData } from "../types/weather";
 
 interface MetricCardProps {
   icon: React.ComponentType<{ className?: string }>;
@@ -6,6 +7,7 @@ interface MetricCardProps {
   value: string | number;
   unit: string;
   color: string;
+  weather: WeatherData;
 }
 
 // Individual metric card component - set to be repeating the same structure of stylign per card and then same format of inputs
@@ -31,33 +33,33 @@ function MetricCard({
   );
 }
 
-export function MetricCards() {
+export function MetricCards({ weather }: { weather: WeatherData }) {
   const metrics = [
     {
       icon: RainDrop,
       title: "Humidity",
-      value: "10%",
+      value: `${weather.humidity}%`,
       unit: "",
       color: "#0f62fe",
     },
     {
       icon: WindyStrong,
       title: "Wind Speed",
-      value: 10,
+      value: weather.windSpeed,
       unit: "km/h",
       color: "#8a3ffc",
     },
     {
       icon: Fog,
       title: "Pressure",
-      value: 1025,
+      value: weather.pressure,
       unit: "hPa",
       color: "#fa4d56",
     },
     {
       icon: View,
       title: "Visibility",
-      value: 10,
+      value: weather.visibility,
       unit: "km",
       color: "#0043ce",
     },
@@ -66,7 +68,7 @@ export function MetricCards() {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {metrics.map((metric, index) => (
-        <MetricCard key={index} {...metric} />
+        <MetricCard key={index} {...metric} weather={weather} />
       ))}
     </div>
   );

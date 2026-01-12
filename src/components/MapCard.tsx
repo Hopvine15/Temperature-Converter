@@ -28,7 +28,7 @@ export function MapCard({ lat, lon, locationName, countryName }: MapCardProps) {
   const lonDirection = lon !== undefined && lon >= 0 ? "East" : "West";
 
   return (
-    <div className="bg-white border border-carbon-gray-20 w-full lg:w-140">
+    <div className="bg-white border border-carbon-gray-20 w-full lg:w-140 h-full flex flex-col">
       <div className="border-b border-carbon-gray-20 px-6 py-4">
         <h2 className="text-carbon-gray-100 text-lg m-0">Location</h2>
       </div>
@@ -66,7 +66,7 @@ export function MapCard({ lat, lon, locationName, countryName }: MapCardProps) {
             </MapContainer>
           ) : (
             <div className="h-full flex items-center justify-center text-sm text-carbon-gray-60 bg-carbon-gray-10">
-              Location map coming soon
+              Location map - please input a location to view
             </div>
           )}
         </div>
