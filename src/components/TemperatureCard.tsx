@@ -1,13 +1,11 @@
 import { MetricCards } from "./MetricCards";
+import type { WeatherData } from "../types/weather";
+
 type TemperatureUnit = "celsius" | "fahrenheit";
 
 interface TemperatureCardProps {
   primaryUnit: TemperatureUnit;
-  temperatureC: number;
-  temperatureF: number;
-  feelsLikeC: number;
-  feelsLikeF: number;
-  condition: string;
+  weather: WeatherData;
 }
 
 const formatTemp = (value: number) =>
@@ -22,21 +20,69 @@ const getConditionColor = (condition: string) => {
   return "#6f6f6f";
 };
 
+const formatCondition = (condition: string) =>
+  condition
+    .split(" ")
+    .map((word) =>
+      word.length ? `${word[0].toUpperCase()}${word.slice(1)}` : ""
+    )
+    .join(" ")
+    .trim();
+
+const formatOffset = (offsetSeconds: number) => {
+  const sign = offsetSeconds >= 0 ? "+" : "-";
+  const totalMinutes = Math.abs(Math.round(offsetSeconds / 60));
+  const hours = Math.floor(totalMinutes / 60)
+    .toString()
+    .padStart(2, "0");
+  const minutes = (totalMinutes % 60).toString().padStart(2, "0");
+  return `${sign}${hours}:${minutes}`;
+};
+
+const formatTimestamp = (timestamp: number, offsetSeconds: number) => {
+  const safeTimestamp = Number.isFinite(timestamp)
+    ? timestamp
+    : Date.now() / 1000;
+  const localMillis = (safeTimestamp + offsetSeconds) * 1000;
+  const localDate = new Date(localMillis);
+
+  const dateTimeLabel = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "UTC",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour12: false,
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(localDate);
+
+  const offsetLabel = formatOffset(offsetSeconds);
+  return { dateTimeLabel, offsetLabel };
+};
+
 export function TemperatureCard({
   primaryUnit,
-  temperatureC,
-  temperatureF,
-  feelsLikeC,
-  feelsLikeF,
-  condition,
+  weather,
 }: TemperatureCardProps) {
-  const primaryTemp = primaryUnit === "celsius" ? temperatureC : temperatureF;
-  const secondaryTemp = primaryUnit === "celsius" ? temperatureF : temperatureC;
-  const feelsPrimary = primaryUnit === "celsius" ? feelsLikeC : feelsLikeF;
-  const feelsSecondary = primaryUnit === "celsius" ? feelsLikeF : feelsLikeC;
+  const feelsLikeF = weather.feelsLikeF ?? weather.tempF ?? 0;
 
+  const primaryTemp = primaryUnit === "celsius" ? weather.tempC : weather.tempF;
+  const secondaryTemp =
+    primaryUnit === "celsius" ? weather.tempF : weather.tempC;
+  const feelsPrimary =
+    primaryUnit === "celsius" ? weather.feelsLikeC : feelsLikeF;
+  const feelsSecondary =
+    primaryUnit === "celsius" ? feelsLikeF : weather.feelsLikeC;
   const primaryLabel = primaryUnit === "celsius" ? "C" : "F";
   const secondaryLabel = primaryUnit === "celsius" ? "F" : "C";
+
+  const condition = formatCondition(
+    weather.description ?? weather.condition ?? "-"
+  );
+  const { dateTimeLabel, offsetLabel } = formatTimestamp(
+    weather.timestamp,
+    weather.timezoneOffset ?? 0
+  );
 
   return (
     <div className="space-y-6">
@@ -80,11 +126,11 @@ export function TemperatureCard({
           </p>
         </div>
       </div>
-      <MetricCards />
+      <MetricCards weather={weather} />
       <div className="border border-carbon-gray-20 bg-carbon-gray-20 px-3 py-2 text-xs text-carbon-gray-70">
         <span className="font-semibold text-carbon-gray-90">Last updated:</span>{" "}
         <span className="text-carbon-gray-70">
-          2025-01-09 12:00 GMT (UTC+0)
+          {dateTimeLabel} (UTC{offsetLabel})
         </span>
       </div>
     </div>
