@@ -8,6 +8,7 @@ import { TemperatureCard } from "./components/TemperatureCard";
 import { MapCard } from "./components/MapCard";
 import type { WeatherData } from "./types/weather";
 import { fetchWeather } from "./utils/weatherClient";
+import { MixedDataCard } from "./components/MixedDataCard";
 
 type TemperatureUnit = "celsius" | "fahrenheit";
 
@@ -60,7 +61,7 @@ function App() {
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_560px] gap-4 my-4 items-stretch">
           <div className="bg-white border border-carbon-gray-20 h-full flex flex-col">
             <div className="border-b border-carbon-gray-20 px-6 py-4">
-              <h2 className="text-carbon-gray-100 text-lg m-0">
+              <h2 className="text-carbon-gray-100 font-medium text-lg m-0">
                 Current Conditions
               </h2>
             </div>
@@ -86,6 +87,13 @@ function App() {
             locationName={location?.name}
             countryName={countryName}
           />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 items-stretch">
+          {weather ? (
+            <>
+              <MixedDataCard weather={weather} primaryUnit={primaryUnit} />
+            </>
+          ) : null}
         </div>
       </main>
     </div>
