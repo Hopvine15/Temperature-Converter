@@ -182,6 +182,21 @@ export function MixedDataCard({ weather, primaryUnit }: MixedDataCardProps) {
               )}
             </DataTable>
           </Theme>
+          <div
+            className="bg-carbon-gray-10 p-4 mt-5 border-l-4"
+            style={{ borderLeftColor: "#0f62fe" }}
+          >
+            <span className="mb-1 text-sm font-bold text-carbon-gray-70">
+              Current Condition:{" "}
+            </span>
+            <span className="mb-1 text-sm text-carbon-gray-70">
+              {formatCondition(weather.description || weather.condition)}
+            </span>
+            <p className="mt-1 text-xs text-carbon-gray-70">
+              Live weather data for your selected location. See last updated
+              time above.
+            </p>
+          </div>
         </div>
       </div>
     </div>
