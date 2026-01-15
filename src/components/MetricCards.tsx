@@ -1,4 +1,5 @@
 import { View, WindyStrong, RainDrop, Fog } from "@carbon/icons-react";
+import { Tile } from "@carbon/react";
 import type { WeatherData } from "../types/weather";
 
 interface MetricCardProps {
@@ -20,7 +21,7 @@ function MetricCard({
   color,
 }: MetricCardProps) {
   return (
-    <div
+    <Tile
       className="bg-carbon-gray-10 p-4 border-l-4"
       style={{ borderLeftColor: color }}
     >
@@ -29,7 +30,7 @@ function MetricCard({
       </p>
       <p className="text-2xl font-mono text-carbon-gray-100">{value}</p>
       <p className="mt-1 text-xs text-carbon-gray-70">{unit}</p>
-    </div>
+    </Tile>
   );
 }
 
