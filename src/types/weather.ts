@@ -6,8 +6,8 @@ export interface WeatherData {
   tempF: number;           
   feelsLikeC: number;      
   feelsLikeF: number;
-  tempMinC?: number;       // main.temp_min
-  tempMaxC?: number;       // main.temp_max
+  tempMinC: number;       // main.temp_min
+  tempMaxC: number;       // main.temp_max
   humidity: number;        // main.humidity
   pressure: number;        // main.pressure
   visibility: number;      // meters

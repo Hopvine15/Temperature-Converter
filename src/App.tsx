@@ -9,6 +9,7 @@ import { MapCard } from "./components/MapCard";
 import type { WeatherData } from "./types/weather";
 import { fetchWeather } from "./utils/weatherClient";
 import { MixedDataCard } from "./components/MixedDataCard";
+import { TempScaleCard } from "./components/TempScaleCard";
 
 type TemperatureUnit = "celsius" | "fahrenheit";
 
@@ -92,6 +93,7 @@ function App() {
           {weather ? (
             <>
               <MixedDataCard weather={weather} primaryUnit={primaryUnit} />
+              <TempScaleCard weather={weather} />
             </>
           ) : null}
         </div>

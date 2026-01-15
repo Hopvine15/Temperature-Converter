@@ -1,7 +1,8 @@
+import { Tile } from "@carbon/react";
 import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-
+  
 interface MapCardProps {
   lat?: number;
   lon?: number;
@@ -76,7 +77,7 @@ export function MapCard({ lat, lon, locationName, countryName }: MapCardProps) {
           {hasLocation ? (
             <>
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-carbon-gray-10 p-4">
+                <Tile className="bg-carbon-gray-10 p-4">
                   <p className="mb-1 text-xs text-carbon-gray-70">Latitude</p>
                   <p className="text-lg font-mono text-carbon-gray-100">
                     {formatCoordinate(lat!)}
@@ -85,9 +86,9 @@ export function MapCard({ lat, lon, locationName, countryName }: MapCardProps) {
                   <p className="mt-1 text-xs text-carbon-gray-70">
                     {latDirection}
                   </p>
-                </div>
+                </Tile>
 
-                <div className="bg-carbon-gray-10 p-4">
+                <Tile className="bg-carbon-gray-10 p-4">
                   <p className="mb-1 text-xs text-carbon-gray-70">Longitude</p>
                   <p className="text-lg font-mono text-carbon-gray-100">
                     {formatCoordinate(lon!)}
@@ -96,7 +97,7 @@ export function MapCard({ lat, lon, locationName, countryName }: MapCardProps) {
                   <p className="mt-1 text-xs text-carbon-gray-70">
                     {lonDirection}
                   </p>
-                </div>
+                </Tile>
               </div>
               <div className="border border-carbon-gray-20 bg-carbon-gray-20 px-3 py-2 text-xs text-carbon-gray-70">
                 <span className="font-semibold text-carbon-gray-90">
