@@ -6,6 +6,35 @@ interface TempScaleCardProps {
 }
 
 export function TempScaleCard({ weather }: TempScaleCardProps) {
+  const scaleMin = -20;
+  const scaleMax = 45;
+  // Scale segments drive both classification and tick labels.
+  const scaleSegments = [
+    { label: "Freezing", min: -20, max: -5, tick: -20 },
+    { label: "V. Cold", min: -5, max: 5, tick: -5 },
+    { label: "Cold", min: 5, max: 15, tick: 5 },
+    { label: "Cool", min: 15, max: 20, tick: 15 },
+    { label: "Comfort", min: 20, max: 25, tick: 20 },
+    { label: "Warm", min: 25, max: 30, tick: 25 },
+    { label: "Hot", min: 30, max: 40, tick: 30 },
+    { label: "V. Hot", min: 40, max: scaleMax, tick: 40 },
+  ];
+
+  // Keep the marker inside the visible bar.
+  const clamp = (value: number, min: number, max: number) =>
+    Math.min(Math.max(value, min), max);
+  const markerPosition =
+    ((clamp(weather.tempC, scaleMin, scaleMax) - scaleMin) /
+      (scaleMax - scaleMin)) *
+    100;
+
+  // First segment whose max is above the temperature wins.
+  const classification =
+    scaleSegments.find((segment) => weather.tempC < segment.max) ??
+    scaleSegments[scaleSegments.length - 1];
+
+  const gradientStyle =
+    "linear-gradient(90deg, #4589ff 0%, #42be65 30%, #f1c21b 50%, #da1e28 100%)";
 
   return (
     <div className="space-y-6">
@@ -16,20 +45,72 @@ export function TempScaleCard({ weather }: TempScaleCardProps) {
           </h2>
         </div>
         <div className="p-6">
-            <div className="grid grid-cols-2 gap-4">
-                <Tile className="p-4">
-                  <p className="mb-1 text-xs text-carbon-gray-70">Celsius</p>
-                  <p className="text-2xl font-mono text-carbon-gray-100">
-                    {weather.tempC}°C
-                  </p>
-                </Tile>
-                <Tile className="p-4">
-                  <p className="mb-1 text-xs text-carbon-gray-70">Fahrenheit</p>
-                  <p className="text-2xl font-mono text-carbon-gray-100">
-                    {weather.tempF}°F
-                  </p>
-                </Tile>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Tile className="p-4">
+              <p className="mb-1 text-xs text-carbon-gray-70">Celsius</p>
+              <p className="text-2xl font-mono text-carbon-gray-100">
+                {weather.tempC.toFixed(1)}°C
+              </p>
+            </Tile>
+            <Tile className="p-4">
+              <p className="mb-1 text-xs text-carbon-gray-70">Fahrenheit</p>
+              <p className="text-2xl font-mono text-carbon-gray-100">
+                {weather.tempF.toFixed(1)}°F
+              </p>
+            </Tile>
+          </div>
+          <div className="mt-6 rounded border border-carbon-gray-20 bg-carbon-gray-10 p-4">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="text-sm text-carbon-gray-90 m-0">
+                Temperature Classification
+              </p>
+              <span className="temp-scale-badge text-white bg-carbon-blue-60">
+                {classification.label}
+              </span>
             </div>
+            <div
+              className="temp-scale-track mt-3"
+              style={{ background: gradientStyle }}
+            >
+              {[0, 25, 50, 75, 100].map((pos) => (
+                <div
+                  key={pos}
+                  className="temp-scale-track-marker"
+                  style={{ left: `${pos}%` }}
+                />
+              ))}
+              <div
+                className="temp-scale-marker"
+                style={{ left: `${markerPosition}%` }}
+              >
+                <div className="temp-marker-tick" />
+                <div className="temp-marker-float">
+                  <div className="temp-marker-diamond" />
+                  <div className="temp-marker-label font-mono font-medium">
+                    {weather.tempC.toFixed(1)}°C
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-10 grid grid-cols-4 md:grid-cols-8 gap-y-2 text-xs text-carbon-gray-80">
+              {scaleSegments.map((segment, index) => {
+                const alignment =
+                  index === 0
+                    ? "text-left"
+                    : index === scaleSegments.length - 1
+                      ? "text-right"
+                      : "text-center";
+                return (
+                  <div key={segment.label} className={alignment}>
+                    <div className="text-carbon-gray-90">{segment.label}</div>
+                    <div className="text-carbon-gray-70 font-mono">
+                      {segment.tick}°
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </div>
