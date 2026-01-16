@@ -12,13 +12,26 @@ import { MixedDataCard } from "./components/MixedDataCard";
 import { TempScaleCard } from "./components/TempScaleCard";
 
 type TemperatureUnit = "celsius" | "fahrenheit";
+const TEMPERATURE_UNIT_STORAGE_KEY = "temperatureUnit";
 
 function App() {
-  const [primaryUnit, setPrimaryUnit] = useState<TemperatureUnit>("celsius");
+  const [primaryUnit, setPrimaryUnit] = useState<TemperatureUnit>(() => {
+    if (typeof window === "undefined") return "celsius";
+    const savedUnit = window.localStorage.getItem(
+      TEMPERATURE_UNIT_STORAGE_KEY
+    );
+    return savedUnit === "celsius" || savedUnit === "fahrenheit"
+      ? savedUnit
+      : "celsius";
+  });
   const [location, setLocation] = useState<Location | null>(null);
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [isLoadingWeather, setIsLoadingWeather] = useState<boolean>(false);
   const [weatherError, setWeatherError] = useState<string | null>(null);
+
+  useEffect(() => {
+    window.localStorage.setItem(TEMPERATURE_UNIT_STORAGE_KEY, primaryUnit);
+  }, [primaryUnit]);
 
   useEffect(() => {
     if (!location) return;
@@ -93,7 +106,7 @@ function App() {
           {weather ? (
             <>
               <MixedDataCard weather={weather} primaryUnit={primaryUnit} />
-              <TempScaleCard weather={weather} />
+              <TempScaleCard weather={weather} primaryUnit={primaryUnit} />
             </>
           ) : null}
         </div>
