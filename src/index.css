@@ -30,19 +30,19 @@
   /* Background utilities */
   [class^="bg-carbon-"],
   [class*=" bg-carbon-"] {
-    background-color: var(--carbon-token);
+    background-color: var(--carbon-bg);
   }
 
   /* Text utilities */
   [class^="text-carbon-"],
   [class*=" text-carbon-"] {
-    color: var(--carbon-token);
+    color: var(--carbon-text);
   }
 
   /* Border utilities */
   [class^="border-carbon-"],
   [class*=" border-carbon-"] {
-    color: var(--carbon-token);
+    color: var(--carbon-border);
   }
 }
 
@@ -51,68 +51,90 @@
   .bg-carbon-blue-60,
   .text-carbon-blue-60,
   .border-carbon-blue-60 {
-    --carbon-token: var(--carbon-blue-60);
+    --carbon-bg: var(--carbon-blue-60);
+    --carbon-text: var(--carbon-blue-60);
+    --carbon-border: var(--carbon-blue-60);
   }
 
   /* Grays */
   .bg-carbon-gray-100,
   .text-carbon-gray-100,
   .border-carbon-gray-100 {
-    --carbon-token: var(--carbon-gray-100);
+    --carbon-bg: var(--carbon-gray-100);
+    --carbon-text: var(--carbon-gray-100);
+    --carbon-border: var(--carbon-gray-100);
   }
 
   .bg-carbon-gray-90,
   .text-carbon-gray-90,
   .border-carbon-gray-90 {
-    --carbon-token: var(--carbon-gray-90);
+    --carbon-bg: var(--carbon-gray-90);
+    --carbon-text: var(--carbon-gray-90);
+    --carbon-border: var(--carbon-gray-90);
   }
 
   .bg-carbon-gray-80,
   .text-carbon-gray-80,
   .border-carbon-gray-80 {
-    --carbon-token: var(--carbon-gray-80);
+    --carbon-bg: var(--carbon-gray-80);
+    --carbon-text: var(--carbon-gray-80);
+    --carbon-border: var(--carbon-gray-80);
   }
 
   .bg-carbon-gray-70,
   .text-carbon-gray-70,
   .border-carbon-gray-70 {
-    --carbon-token: var(--carbon-gray-70);
+    --carbon-bg: var(--carbon-gray-70);
+    --carbon-text: var(--carbon-gray-70);
+    --carbon-border: var(--carbon-gray-70);
   }
 
   .bg-carbon-gray-60,
   .text-carbon-gray-60,
   .border-carbon-gray-60 {
-    --carbon-token: var(--carbon-gray-60);
+    --carbon-bg: var(--carbon-gray-60);
+    --carbon-text: var(--carbon-gray-60);
+    --carbon-border: var(--carbon-gray-60);
   }
 
   .bg-carbon-gray-50,
   .text-carbon-gray-50,
   .border-carbon-gray-50 {
-    --carbon-token: var(--carbon-gray-50);
+    --carbon-bg: var(--carbon-gray-50);
+    --carbon-text: var(--carbon-gray-50);
+    --carbon-border: var(--carbon-gray-50);
   }
 
   .bg-carbon-gray-40,
   .text-carbon-gray-40,
   .border-carbon-gray-40 {
-    --carbon-token: var(--carbon-gray-40);
+    --carbon-bg: var(--carbon-gray-40);
+    --carbon-text: var(--carbon-gray-40);
+    --carbon-border: var(--carbon-gray-40);
   }
 
   .bg-carbon-gray-30,
   .text-carbon-gray-30,
   .border-carbon-gray-30 {
-    --carbon-token: var(--carbon-gray-30);
+    --carbon-bg: var(--carbon-gray-30);
+    --carbon-text: var(--carbon-gray-30);
+    --carbon-border: var(--carbon-gray-30);
   }
 
   .bg-carbon-gray-20,
   .text-carbon-gray-20,
   .border-carbon-gray-20 {
-    --carbon-token: var(--carbon-gray-20);
+    --carbon-bg: var(--carbon-gray-20);
+    --carbon-text: var(--carbon-gray-20);
+    --carbon-border: var(--carbon-gray-20);
   }
 
   .bg-carbon-gray-10,
   .text-carbon-gray-10,
   .border-carbon-gray-10 {
-    --carbon-token: var(--carbon-gray-10);
+    --carbon-bg: var(--carbon-gray-10);
+    --carbon-text: var(--carbon-gray-10);
+    --carbon-border: var(--carbon-gray-10);
   }
 
   .bg-temp-freezing {
@@ -145,6 +167,11 @@ body {
   margin: 0;
   padding: 0;
   background: var(--carbon-gray-10);
+}
+
+footer a,
+footer a:visited {
+  color: inherit;
 }
 
 /* Leaflet map tooltip for location pin */
