@@ -39,7 +39,7 @@ export async function fetchWeather(
   signal?: AbortSignal,
 ): Promise<WeatherData> {
   const response = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&appid=${API_KEY}`,
+    `/api/weather?lat=${encodeURIComponent(String(lat))}&lon=${encodeURIComponent(String(lon))}&units=${encodeURIComponent(units)}`,
     { signal },
   );
   if (!response.ok) {
