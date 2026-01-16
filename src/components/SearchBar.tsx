@@ -30,7 +30,7 @@ export function SearchBar({ onCitySelect }: SearchBarProps) {
 
     try {
       const response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(searchQuery)}&limit=3&appid=${API_KEY}`
+        `/api/geocode?q=${encodeURIComponent(searchQuery)}&limit=3`
       );
 
       if (!response.ok) {
