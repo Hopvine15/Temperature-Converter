@@ -2,5 +2,9 @@
   "name": "temperature-converter",
   "compatibility_date": "2026-01-16",
   "main": "worker.ts",
-  "assets": { "directory": "./dist" }
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+  },
 }
