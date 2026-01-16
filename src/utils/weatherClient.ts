@@ -36,9 +36,11 @@ export async function fetchWeather(
   lat: number,
   lon: number,
   units: "metric",
+  signal?: AbortSignal,
 ): Promise<WeatherData> {
   const response = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&appid=${API_KEY}`,
+    { signal },
   );
   if (!response.ok) {
     throw new Error(`Error fetching weather data: ${response.statusText}`);

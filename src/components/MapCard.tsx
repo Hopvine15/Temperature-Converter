@@ -1,4 +1,10 @@
-import { Tile } from "@carbon/react";
+import { useEffect, useState } from "react";
+import {
+  InlineNotification,
+  Loading,
+  NotificationActionButton,
+  Tile,
+} from "@carbon/react";
 import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -27,6 +33,23 @@ export function MapCard({ lat, lon, locationName, countryName }: MapCardProps) {
   const formatCoordinate = (value: number) => Math.abs(value).toFixed(4);
   const latDirection = lat !== undefined && lat >= 0 ? "North" : "South";
   const lonDirection = lon !== undefined && lon >= 0 ? "East" : "West";
+  const [isMapLoading, setIsMapLoading] = useState(false);
+  const [mapError, setMapError] = useState<string | null>(null);
+  const [mapReloadKey, setMapReloadKey] = useState(0);
+
+  useEffect(() => {
+    if (!hasLocation) {
+      setIsMapLoading(false);
+      setMapError(null);
+      return;
+    }
+    setMapError(null);
+  }, [hasLocation, lat, lon]);
+
+  const handleRetryMap = () => {
+    setMapError(null);
+    setMapReloadKey((prev) => prev + 1);
+  };
 
   return (
     <div className="bg-white border border-carbon-gray-20 w-full lg:w-140 h-full flex flex-col">
@@ -36,10 +59,10 @@ export function MapCard({ lat, lon, locationName, countryName }: MapCardProps) {
 
       <div className="p-6 space-y-3">
         {/* map area */}
-        <div className="aspect-4/2 min-h-40 border border-carbon-gray-20 overflow-hidden">
+        <div className="aspect-4/2 min-h-40 border border-carbon-gray-20 overflow-hidden relative">
           {hasLocation ? (
             <MapContainer
-              key={`${lat}-${lon}`}
+              key={`${lat}-${lon}-${mapReloadKey}`}
               center={[lat!, lon!]}
               zoom={mapZoom}
               scrollWheelZoom={true}
@@ -51,6 +74,14 @@ export function MapCard({ lat, lon, locationName, countryName }: MapCardProps) {
                 url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
                 detectRetina
                 attribution="OpenStreetMap contributors | CARTO"
+                eventHandlers={{
+                  loading: () => setIsMapLoading(true),
+                  load: () => setIsMapLoading(false),
+                  tileerror: () => {
+                    setIsMapLoading(false);
+                    setMapError("Map tiles failed to load. Please try again.");
+                  },
+                }}
               />
 
               <Marker position={[lat!, lon!]}>
@@ -70,7 +101,34 @@ export function MapCard({ lat, lon, locationName, countryName }: MapCardProps) {
               Location map - please input a location to view
             </div>
           )}
+          {hasLocation && isMapLoading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-white/80">
+              <Loading
+                active
+                small
+                withOverlay={false}
+                description="Loading map"
+              />
+            </div>
+          )}
         </div>
+        {hasLocation && mapError && (
+          <div className="mt-3">
+            <InlineNotification
+              kind="error"
+              lowContrast
+              title="Map unavailable"
+              subtitle={mapError}
+              hideCloseButton
+            >
+              <div className="mt-2">
+                <NotificationActionButton inline onClick={handleRetryMap}>
+                  Retry
+                </NotificationActionButton>
+              </div>
+            </InlineNotification>
+          </div>
+        )}
 
         {/* Text details */}
         <div className="space-y-4 text-carbon-gray-80">

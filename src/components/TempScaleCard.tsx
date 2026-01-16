@@ -1,15 +1,21 @@
 import type { WeatherData } from "../types/weather";
-import { Tile } from "@carbon/react";
+import { Tile, Loading } from "@carbon/react";
 import { celsiusToFahrenheit } from "../utils/temperature";
 
 type TemperatureUnit = "celsius" | "fahrenheit";
 
 interface TempScaleCardProps {
-  weather: WeatherData;
+  weather?: WeatherData | null;
   primaryUnit: TemperatureUnit;
+  isLoading?: boolean;
 }
 
-export function TempScaleCard({ weather, primaryUnit }: TempScaleCardProps) {
+export function TempScaleCard({
+  weather,
+  primaryUnit,
+  isLoading = false,
+}: TempScaleCardProps) {
+  const hasWeather = Boolean(weather);
   const scaleMinC = -20;
   const scaleMaxC = 40;
   // Scale segments with both classification and tick labels
@@ -26,14 +32,16 @@ export function TempScaleCard({ weather, primaryUnit }: TempScaleCardProps) {
     { label: "V. Hot", min: 40, max: scaleMaxC, tick: 40 },
   ];
 
-  const primaryTemp =
-    primaryUnit === "celsius"
-      ? weather.tempC
-      : celsiusToFahrenheit(weather.tempC);
-  const secondaryTemp =
-    primaryUnit === "celsius"
-      ? celsiusToFahrenheit(weather.tempC)
-      : weather.tempC;
+  const primaryTemp = hasWeather
+    ? primaryUnit === "celsius"
+      ? weather!.tempC
+      : celsiusToFahrenheit(weather!.tempC)
+    : null;
+  const secondaryTemp = hasWeather
+    ? primaryUnit === "celsius"
+      ? celsiusToFahrenheit(weather!.tempC)
+      : weather!.tempC
+    : null;
   const primaryLabel = primaryUnit === "celsius" ? "C" : "F";
   const secondaryLabel = primaryUnit === "celsius" ? "F" : "C";
 
@@ -45,23 +53,27 @@ export function TempScaleCard({ weather, primaryUnit }: TempScaleCardProps) {
   // Keep the marker inside the visible bar
   const clamp = (value: number, min: number, max: number) =>
     Math.min(Math.max(value, min), max);
-  const clampedTemp = clamp(primaryTemp, scaleMin, scaleMax);
-  const markerPosition =
-    ((clampedTemp - scaleMin) / (scaleMax - scaleMin)) * 100;
+  const clampedTemp = hasWeather
+    ? clamp(primaryTemp as number, scaleMin, scaleMax)
+    : scaleMin;
+  const markerPosition = hasWeather
+    ? ((clampedTemp - scaleMin) / (scaleMax - scaleMin)) * 100
+    : 0;
 
   // First segment whose max is above the temperature wins
-  const classification =
-    scaleSegments.find((segment, index) =>
-      index === scaleSegments.length - 1
-        ? weather.tempC >= segment.min && weather.tempC <= segment.max
-        : weather.tempC >= segment.min && weather.tempC < segment.max
-    ) ?? scaleSegments[scaleSegments.length - 1];
+  const classification = hasWeather
+    ? scaleSegments.find((segment, index) =>
+        index === scaleSegments.length - 1
+          ? weather!.tempC >= segment.min && weather!.tempC <= segment.max
+          : weather!.tempC >= segment.min && weather!.tempC < segment.max
+      ) ?? scaleSegments[scaleSegments.length - 1]
+    : null;
 
   const gradientStyle =
     "linear-gradient(90deg, #4589ff 0%, #42be65 30%, #f1c21b 50%, #da1e28 100%)";
 
-  const formatTemp = (value: number, decimals: number) =>
-    Number.isFinite(value) ? value.toFixed(decimals) : "--";
+  const formatTemp = (value: number | null, decimals: number) =>
+    value === null || !Number.isFinite(value) ? "--" : value.toFixed(decimals);
 
   return (
     <div className="space-y-6 h-full">
@@ -71,7 +83,7 @@ export function TempScaleCard({ weather, primaryUnit }: TempScaleCardProps) {
             Temperature Scale
           </h2>
         </div>
-        <div className="p-6 flex-1 flex flex-col">
+        <div className="p-6 flex-1 flex flex-col relative">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Tile className="p-5 py-7">
               <p className="mb-1 text-xs text-carbon-gray-70">
@@ -94,13 +106,18 @@ export function TempScaleCard({ weather, primaryUnit }: TempScaleCardProps) {
               </p>
             </Tile>
           </div>
+          {!hasWeather && (
+            <p className="mt-3 text-sm text-carbon-gray-70">
+              Select a city to view the temperature scale.
+            </p>
+          )}
           <div className="mt-6 border border-carbon-gray-20 bg-carbon-gray-10 p-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-sm text-carbon-gray-90 m-0">
                 Temperature Classification
               </p>
               <span className="text-xs px-3 py-1 text-white bg-carbon-blue-60">
-                {classification.label}
+                {classification?.label ?? "Select a city"}
               </span>
             </div>
             <div
@@ -114,20 +131,22 @@ export function TempScaleCard({ weather, primaryUnit }: TempScaleCardProps) {
                   style={{ left: `${pos}%` }}
                 />
               ))}
-              <div
-                className="temp-scale-marker"
-                style={{ left: `${markerPosition}%` }}
-              >
-                <div className="temp-marker-tick" />
-                <div className="temp-marker-float">
-                  <div className="temp-marker-diamond" />
-                  <div className="temp-marker-label font-mono font-medium">
-                    {formatTemp(primaryTemp, 1)}
-                    {"\u00b0"}
-                    {primaryLabel}
+              {hasWeather && (
+                <div
+                  className="temp-scale-marker"
+                  style={{ left: `${markerPosition}%` }}
+                >
+                  <div className="temp-marker-tick" />
+                  <div className="temp-marker-float">
+                    <div className="temp-marker-diamond" />
+                    <div className="temp-marker-label font-mono font-medium">
+                      {formatTemp(primaryTemp, 1)}
+                      {"\u00b0"}
+                      {primaryLabel}
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
             <div className="relative mt-10 min-h-9 text-xs text-carbon-gray-80">
               {scaleSegments.map((segment, index) => {
@@ -189,6 +208,16 @@ export function TempScaleCard({ weather, primaryUnit }: TempScaleCardProps) {
               adaptation
             </span>
           </div>
+          {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-white/80">
+              <Loading
+                active
+                small
+                withOverlay={false}
+                description="Loading temperature scale"
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

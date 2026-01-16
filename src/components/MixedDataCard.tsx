@@ -10,14 +10,21 @@ import {
   TableRow,
   Tag,
   Theme,
+  Loading,
 } from "@carbon/react";
 
 interface MixedDataCardProps {
-  weather: WeatherData;
+  weather?: WeatherData | null;
   primaryUnit: "celsius" | "fahrenheit";
+  isLoading?: boolean;
 }
 
-export function MixedDataCard({ weather, primaryUnit }: MixedDataCardProps) {
+export function MixedDataCard({
+  weather,
+  primaryUnit,
+  isLoading = false,
+}: MixedDataCardProps) {
+  const hasWeather = Boolean(weather);
   const headers = [
     { key: "metric", header: "Metric" },
     { key: "value", header: "Value" },
@@ -25,6 +32,7 @@ export function MixedDataCard({ weather, primaryUnit }: MixedDataCardProps) {
   ];
 
   const formatTemperature = (celsius: number, fahrenheit: number) => {
+    if (!hasWeather) return "--";
     const primary =
       primaryUnit === "celsius"
         ? `${celsius.toFixed(0)}°C`
@@ -37,7 +45,7 @@ export function MixedDataCard({ weather, primaryUnit }: MixedDataCardProps) {
   };
 
   const formatCondition = (value: string) =>
-    value ? `${value.charAt(0).toUpperCase()}${value.slice(1)}` : "-";
+    value ? `${value.charAt(0).toUpperCase()}${value.slice(1)}` : "--";
 
   const formatTimezone = (offsetSeconds: number) => {
     const totalMinutes = Math.round(offsetSeconds / 60);
@@ -51,13 +59,15 @@ export function MixedDataCard({ weather, primaryUnit }: MixedDataCardProps) {
     return `UTC${sign}${hours}${minuteSuffix}`;
   };
 
-  const windSpeedKph = weather.windSpeed * 3.6;
+  const windSpeedKph = weather ? weather.windSpeed * 3.6 : 0;
 
   const rows = [
     {
       id: "current-temp",
       metric: "Current Temperature",
-      value: formatTemperature(weather.tempC, weather.tempF),
+      value: hasWeather
+        ? formatTemperature(weather!.tempC, weather!.tempF)
+        : "--",
       type: (
         <Tag size="sm" type="gray">
           temperature
@@ -67,7 +77,9 @@ export function MixedDataCard({ weather, primaryUnit }: MixedDataCardProps) {
     {
       id: "feels-like",
       metric: "Feels Like",
-      value: formatTemperature(weather.feelsLikeC, weather.feelsLikeF),
+      value: hasWeather
+        ? formatTemperature(weather!.feelsLikeC, weather!.feelsLikeF)
+        : "--",
       type: (
         <Tag size="sm" type="gray">
           temperature
@@ -77,7 +89,7 @@ export function MixedDataCard({ weather, primaryUnit }: MixedDataCardProps) {
     {
       id: "humidity",
       metric: "Humidity",
-      value: `${weather.humidity}%`,
+      value: hasWeather ? `${weather!.humidity}%` : "--",
       type: (
         <Tag size="sm" type="gray">
           percentage
@@ -87,7 +99,7 @@ export function MixedDataCard({ weather, primaryUnit }: MixedDataCardProps) {
     {
       id: "pressure",
       metric: "Atmospheric Pressure",
-      value: `${weather.pressure} hPa`,
+      value: hasWeather ? `${weather!.pressure} hPa` : "--",
       type: (
         <Tag size="sm" type="gray">
           pressure
@@ -97,7 +109,7 @@ export function MixedDataCard({ weather, primaryUnit }: MixedDataCardProps) {
     {
       id: "wind-speed",
       metric: "Wind Speed",
-      value: `${windSpeedKph.toFixed(1)} km/h`,
+      value: hasWeather ? `${windSpeedKph.toFixed(1)} km/h` : "--",
       type: (
         <Tag size="sm" type="gray">
           speed
@@ -107,7 +119,7 @@ export function MixedDataCard({ weather, primaryUnit }: MixedDataCardProps) {
     {
       id: "visibility",
       metric: "Visibility",
-      value: `${weather.visibility.toFixed(1)} km`,
+      value: hasWeather ? `${weather!.visibility.toFixed(1)} km` : "--",
       type: (
         <Tag size="sm" type="gray">
           distance
@@ -117,7 +129,9 @@ export function MixedDataCard({ weather, primaryUnit }: MixedDataCardProps) {
     {
       id: "condition",
       metric: "Condition",
-      value: formatCondition(weather.description || weather.condition),
+      value: hasWeather
+        ? formatCondition(weather!.description || weather!.condition)
+        : "--",
       type: (
         <Tag size="sm" type="gray">
           status
@@ -127,7 +141,7 @@ export function MixedDataCard({ weather, primaryUnit }: MixedDataCardProps) {
     {
       id: "timezone",
       metric: "Timezone",
-      value: formatTimezone(weather.timezoneOffset),
+      value: hasWeather ? formatTimezone(weather!.timezoneOffset) : "--",
       type: (
         <Tag size="sm" type="gray">
           time
@@ -144,7 +158,7 @@ export function MixedDataCard({ weather, primaryUnit }: MixedDataCardProps) {
             Atmospheric Data
           </h2>
         </div>
-        <div className="p-6 flex-1 flex flex-col">
+        <div className="p-6 flex-1 flex flex-col relative">
           <Theme theme="g10">
             <DataTable rows={rows} headers={headers}>
               {({
@@ -190,13 +204,26 @@ export function MixedDataCard({ weather, primaryUnit }: MixedDataCardProps) {
               Current Condition:{" "}
             </span>
             <span className="mb-1 text-sm text-carbon-gray-70">
-              {formatCondition(weather.description || weather.condition)}
+              {hasWeather
+                ? formatCondition(weather!.description || weather!.condition)
+                : "Select a city to view live conditions."}
             </span>
             <p className="mt-1 text-xs text-carbon-gray-70">
-              Live weather data for your selected location. See last updated
-              time above.
+              {hasWeather
+                ? "Live weather data for your selected location. See last updated time above."
+                : "Atmospheric metrics will appear once a location is selected."}
             </p>
           </div>
+          {isLoading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-white/80">
+              <Loading
+                active
+                small
+                withOverlay={false}
+                description="Loading atmospheric data"
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
