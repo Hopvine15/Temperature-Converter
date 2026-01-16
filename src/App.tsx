@@ -10,6 +10,7 @@ import type { WeatherData } from "./types/weather";
 import { fetchWeather } from "./utils/weatherClient";
 import { MixedDataCard } from "./components/MixedDataCard";
 import { TempScaleCard } from "./components/TempScaleCard";
+import { Footer } from "./components/Footer";
 
 type TemperatureUnit = "celsius" | "fahrenheit";
 const TEMPERATURE_UNIT_STORAGE_KEY = "temperatureUnit";
@@ -17,9 +18,7 @@ const TEMPERATURE_UNIT_STORAGE_KEY = "temperatureUnit";
 function App() {
   const [primaryUnit, setPrimaryUnit] = useState<TemperatureUnit>(() => {
     if (typeof window === "undefined") return "celsius";
-    const savedUnit = window.localStorage.getItem(
-      TEMPERATURE_UNIT_STORAGE_KEY
-    );
+    const savedUnit = window.localStorage.getItem(TEMPERATURE_UNIT_STORAGE_KEY);
     return savedUnit === "celsius" || savedUnit === "fahrenheit"
       ? savedUnit
       : "celsius";
@@ -111,6 +110,8 @@ function App() {
           ) : null}
         </div>
       </main>
+      {/* Kept outside the main to avoid position issues with padding from rest of main */}
+      <Footer />
     </div>
   );
 }
