@@ -5,8 +5,8 @@
 ### Project Title
 Temperature-Converter
 
-### Live Demo / Deployed Link
-[Live Demo](#) (Add the actual link here)
+### Live Demo
+[Live Demo](https://temperature-converter.zach-r-lines.workers.dev/)
 
 ### Author / Role
 Zach - Developer
@@ -145,6 +145,12 @@ IBM employees who need to check weather conditions for client meetings.
 - **Tools Used:** GitHub Projects
 - **Task Tracking:** Issues and pull requests
 
+### Why This Approach?
+Using an Agile methodology allowed for iterative development, ensuring that each feature was fully functional and tested before moving on to the next. By breaking the project into smaller tickets, I was able to:
+- Maintain focus on individual components, such as the temperature conversion logic and UI cards.
+- Adapt to changes and feedback quickly.
+- Ensure traceability of all features through GitHub issues and pull requests.
+
 ---
 
 ## 10. Design & Prototyping
@@ -152,6 +158,9 @@ IBM employees who need to check weather conditions for client meetings.
 - **Wireframes:** (Add links or images here)
 - **Design Decisions:** Focused on simplicity, usability, and alignment with IBM Carbon Design System.
 - **Accessibility Considerations:** High contrast colors, keyboard navigation.
+
+### Why These Design Choices?
+The IBM Carbon Design System was chosen to ensure a professional and consistent user experience, aligning with IBM's internal standards. Accessibility was prioritized to make the app usable for all employees, including those with disabilities. Wireframes were created to visualize the layout and ensure a user-friendly interface before development began.
 
 ---
 
@@ -161,6 +170,9 @@ IBM employees who need to check weather conditions for client meetings.
 2. **Core Logic Implementation:** Temperature conversion logic in `utils/temperature.ts`.
 3. **UI Development:** React components for input, toggle, and display, styled with IBM Carbon Design System.
 4. **Error Handling:** Basic validation for user input.
+
+### Why This Implementation?
+The decision to use Vite and TypeScript was driven by the need for a fast development environment and strong type-checking to reduce runtime errors. React was chosen for its component-based architecture, which made it easier to build and maintain the UI. The IBM Carbon Design System ensured that the app adhered to IBM's design principles.
 
 ---
 
@@ -202,19 +214,25 @@ IBM employees who need to check weather conditions for client meetings.
 ### What Went Well
 - Simple and effective implementation.
 - Clean and modular code structure.
+- The Agile approach allowed for flexibility and iterative improvements.
 
 ### What Didn’t
 - Limited time for advanced features.
+- Some design iterations took longer than expected due to alignment with IBM Carbon standards.
 
 ### Known Limitations
 - No support for Kelvin conversions.
+- Limited testing coverage due to time constraints.
 
 ### What You Would Improve Next
 - Add more temperature scales.
 - Implement unit tests.
+- Optimize the app further for performance.
 
 ### What You Learned
 - Improved TypeScript and React skills.
+- Gained experience with the IBM Carbon Design System.
+- Learned the importance of accessibility and performance optimization in professional apps.
 
 ---
 
