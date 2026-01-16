@@ -25,4 +25,7 @@ export default defineConfig({
     },
   },
   base: '/Temperature-Converter/', // For GitHub Pages
+  build: {
+    outDir: 'docs',
+  }
 })
