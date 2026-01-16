@@ -62,11 +62,17 @@ export function TempScaleCard({
 
   // First segment whose max is above the temperature wins
   const classification = hasWeather
-    ? scaleSegments.find((segment, index) =>
-        index === scaleSegments.length - 1
-          ? weather!.tempC >= segment.min && weather!.tempC <= segment.max
-          : weather!.tempC >= segment.min && weather!.tempC < segment.max
-      ) ?? scaleSegments[scaleSegments.length - 1]
+    ? (() => {
+        const tempC = weather!.tempC;
+        const clampedTempC = clamp(tempC, scaleMinC, scaleMaxC);
+        return (
+          scaleSegments.find((segment, index) =>
+            index === scaleSegments.length - 1
+              ? clampedTempC >= segment.min && clampedTempC <= segment.max
+              : clampedTempC >= segment.min && clampedTempC < segment.max
+          ) ?? scaleSegments[scaleSegments.length - 1]
+        );
+      })()
     : null;
 
   const gradientStyle =
