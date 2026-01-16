@@ -245,3 +245,9 @@ footer a:visited {
   height: 22px;
   background: var(--carbon-gray-100);
 }
+
+@media (max-width: 768px) {
+  .temp-scale-labels {
+    display: none !important;
+  }
+}

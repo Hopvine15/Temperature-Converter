@@ -8,7 +8,7 @@ import {
 import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-  
+
 interface MapCardProps {
   lat?: number;
   lon?: number;
@@ -97,8 +97,10 @@ export function MapCard({ lat, lon, locationName, countryName }: MapCardProps) {
               </Marker>
             </MapContainer>
           ) : (
-            <div className="h-full flex items-center justify-center text-sm text-carbon-gray-60 bg-carbon-gray-10">
-              Location map - please input a location to view
+            <div className="h-full flex items-center justify-center text-sm bg-carbon-gray-10">
+              <p className="text-xs text-carbon-gray-70">
+                Location map - please input a location to view
+              </p>
             </div>
           )}
           {hasLocation && isMapLoading && (

@@ -121,6 +121,10 @@ export function SearchBar({ onCitySelect }: SearchBarProps) {
     }
   };
 
+  const suggestionsId = "city-suggestions";
+  const activeDescendantId =
+    activeIndex >= 0 ? `city-suggestion-${activeIndex}` : undefined;
+
   return (
     <Theme theme="g90">
       <div className="flex-1 md:flex-initial min-w-48 sm:min-w-72 relative">
@@ -128,12 +132,16 @@ export function SearchBar({ onCitySelect }: SearchBarProps) {
           closeButtonLabelText="Clear search input"
           id="city-search"
           size="md"
-          labelText=""
+          labelText="Search for a city"
           placeholder="Search cities..."
           value={query}
           onChange={handleSearchChange}
           onClear={handleClear}
           onKeyDown={handleKeyDown}
+          aria-autocomplete="list"
+          aria-expanded={suggestions.length > 0}
+          aria-controls={suggestionsId}
+          aria-activedescendant={activeDescendantId}
           className="bg-carbon-gray-90 text-white rounded-lg"
         />
         {isLoading && (
@@ -162,7 +170,12 @@ export function SearchBar({ onCitySelect }: SearchBarProps) {
           </div>
         )}
         {suggestions.length > 0 && (
-          <div className="absolute top-full left-0 right-0 bg-white shadow-lg rounded-b-lg border border-carbon-gray-20 overflow-hidden z-20">
+          <div
+            id={suggestionsId}
+            role="listbox"
+            aria-label="City suggestions"
+            className="absolute top-full left-0 right-0 bg-white shadow-lg rounded-b-lg border border-carbon-gray-20 overflow-hidden z-20"
+          >
             {suggestions.map((suggestion, index) => {
               const countryName =
                 COUNTRY_NAME_BY_CODE[suggestion.country] ?? suggestion.country;
@@ -170,9 +183,12 @@ export function SearchBar({ onCitySelect }: SearchBarProps) {
 
               return (
                 <button
+                  id={`city-suggestion-${index}`}
                   key={`${suggestion.lat}-${suggestion.lon}-${index}`}
                   type="button"
-                  className={`w-full text-left px-4 py-3 focus:outline-none ${
+                  role="option"
+                  aria-selected={isActive}
+                  className={`w-full text-left px-4 py-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-carbon-blue-60 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
                     index !== 0 ? "border-t border-carbon-gray-20" : ""
                   } ${isActive ? "bg-carbon-gray-20" : "hover:bg-carbon-gray-20"}`}
                   onMouseEnter={() => setActiveIndex(index)}

@@ -148,7 +148,7 @@ export function TempScaleCard({
                 </div>
               )}
             </div>
-            <div className="relative mt-10 min-h-9 text-xs text-carbon-gray-80">
+            <div className="relative mt-10 min-h-9 text-xs text-carbon-gray-80 temp-scale-labels">
               {scaleSegments.map((segment, index) => {
                 const displayTick =
                   primaryUnit === "celsius"
@@ -160,8 +160,8 @@ export function TempScaleCard({
                   index === 0
                     ? "absolute top-0 translate-x-0 whitespace-nowrap text-left"
                     : index === scaleSegments.length - 1
-                      ? "absolute top-0 -translate-x-full whitespace-nowrap text-right"
-                      : "absolute top-0 -translate-x-1/2 whitespace-nowrap text-center";
+                    ? "absolute top-0 -translate-x-full whitespace-nowrap text-right"
+                    : "absolute top-0 -translate-x-1/2 whitespace-nowrap text-center";
                 return (
                   <div
                     key={segment.label}
