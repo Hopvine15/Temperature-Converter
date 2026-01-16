@@ -129,9 +129,9 @@ function App() {
                 Current Conditions
               </h2>
             </div>
-            <div
+            <section
               className="p-6 flex-1 relative"
-              aria-label="Temperature Information"
+              aria-label="Temperature information"
             >
               {weatherError && (
                 <div className="mb-4">
@@ -166,7 +166,7 @@ function App() {
                   />
                 </div>
               )}
-            </div>
+            </section>
           </div>
 
           {/* Location map */}

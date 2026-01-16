@@ -35,12 +35,12 @@ export function MixedDataCard({
     if (!hasWeather) return "--";
     const primary =
       primaryUnit === "celsius"
-        ? `${celsius.toFixed(0)}°C`
-        : `${fahrenheit.toFixed(1)}°F`;
+        ? `${celsius.toFixed(0)}\u00b0C`
+        : `${fahrenheit.toFixed(1)}\u00b0F`;
     const secondary =
       primaryUnit === "celsius"
-        ? `${fahrenheit.toFixed(1)}°F`
-        : `${celsius.toFixed(0)}°C`;
+        ? `${fahrenheit.toFixed(1)}\u00b0F`
+        : `${celsius.toFixed(0)}\u00b0C`;
     return `${primary} (${secondary})`;
   };
 

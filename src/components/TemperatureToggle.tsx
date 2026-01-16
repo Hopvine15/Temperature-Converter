@@ -12,7 +12,7 @@ export function TemperatureToggle({ primaryUnit, setPrimaryUnit }: TemperatureTo
       <button
         type="button"
         onClick={() => setPrimaryUnit(primaryUnit === 'celsius' ? 'fahrenheit' : 'celsius')}
-        className="relative w-14 h-7 bg-carbon-gray-70 rounded-full transition-colors duration-200 hover:bg-carbon-gray-60 focus:outline-none"
+        className="relative w-14 h-7 bg-carbon-gray-70 rounded-full transition-colors duration-200 hover:bg-carbon-gray-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-carbon-gray-80"
         aria-label="Toggle temperature unit"
       >
         <div
