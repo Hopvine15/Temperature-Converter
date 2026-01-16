@@ -1,8 +1,7 @@
 import type { WeatherData } from "../types/weather";
+import { celsiusToFahrenheit } from "./temperature";
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
-
-const toFahrenheit = (celsius: number) => (celsius * 9) / 5 + 32;
 
 // Normalise openweather api response into my WeatherData shape and fill safe defaults
 function mapToWeatherData(payload: any): WeatherData {
@@ -11,9 +10,9 @@ function mapToWeatherData(payload: any): WeatherData {
 
   return {
     tempC,
-    tempF: toFahrenheit(tempC),
+    tempF: celsiusToFahrenheit(tempC),
     feelsLikeC,
-    feelsLikeF: toFahrenheit(feelsLikeC),
+    feelsLikeF: celsiusToFahrenheit(feelsLikeC),
     tempMinC: Number(payload?.main?.temp_min ?? tempC),
     tempMaxC: Number(payload?.main?.temp_max ?? tempC),
     humidity: Number(payload?.main?.humidity ?? 0),
