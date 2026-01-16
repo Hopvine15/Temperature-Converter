@@ -23,16 +23,43 @@ export default {
         });
       }
 
-      const upstream = new URL("https://api.openweathermap.org/data/2.5/weather");
-      upstream.searchParams.set("lat", lat);
-      upstream.searchParams.set("lon", lon);
-      upstream.searchParams.set("units", units);
+      const upstream = new URL(
+        "https://api.openweathermap.org/data/2.5/weather"
+      );
+      upstream.searchParams.set("q", city);
       upstream.searchParams.set("appid", env.OPENWEATHER_API_KEY);
 
       const res = await fetch(upstream.toString());
       return new Response(res.body, {
         status: res.status,
-        headers: { "content-type": res.headers.get("content-type") ?? "application/json" },
+        headers: {
+          "content-type": res.headers.get("content-type") ?? "application/json",
+        },
+      });
+    }
+
+    if (url.pathname === "/api/geocode") {
+      const q = url.searchParams.get("q");
+      const limit = url.searchParams.get("limit") ?? "3";
+
+      if (!q) {
+        return new Response(JSON.stringify({ error: "Missing ?q=" }), {
+          status: 400,
+          headers: { "content-type": "application/json" },
+        });
+      }
+
+      const upstream = new URL("https://api.openweathermap.org/geo/1.0/direct");
+      upstream.searchParams.set("q", q);
+      upstream.searchParams.set("limit", limit);
+      upstream.searchParams.set("appid", env.OPENWEATHER_API_KEY);
+
+      const res = await fetch(upstream.toString());
+      return new Response(res.body, {
+        status: res.status,
+        headers: {
+          "content-type": res.headers.get("content-type") ?? "application/json",
+        },
       });
     }
 
