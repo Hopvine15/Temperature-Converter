@@ -63,7 +63,7 @@ export function TempScaleCard({ weather }: TempScaleCardProps) {
               </p>
             </Tile>
           </div>
-          <div className="mt-6 rounded border border-carbon-gray-20 bg-carbon-gray-10 p-4">
+          <div className="mt-6  border border-carbon-gray-20 bg-carbon-gray-10 p-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-sm text-carbon-gray-90 m-0">
                 Temperature Classification
@@ -114,12 +114,26 @@ export function TempScaleCard({ weather }: TempScaleCardProps) {
                   >
                     <div className="text-carbon-gray-90">{segment.label}</div>
                     <div className="text-carbon-gray-70 font-mono">
-                      {segment.tick}° 
+                      {segment.tick}°
                     </div>
                   </div>
                 );
               })}
             </div>
+          </div>
+          <div className="mt-6">
+            <Tile
+              className="bg-carbon-gray-10 p-4 border-l-2 border-carbon-gray-20"
+              style={{ borderLeftColor: "var(--carbon-blue-60)" }}
+            >
+              <p className="text-md text-carbon-gray-100 mb-2">
+                Celsius ⟷ Fahrenheit
+              </p>
+              <div className="flex flex-col gap-2 text-sm font-mono text-carbon-gray-70">
+                <span>°F = (°C x 9/5) + 32</span>
+                <span>°C = (°F - 32) x 5/9</span>
+              </div>
+            </Tile>
           </div>
         </div>
       </div>
