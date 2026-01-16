@@ -1,4 +1,4 @@
-import { Search, Theme } from "@carbon/react";
+import { ActionableNotification, Loading, Search, Theme } from "@carbon/react";
 import { useState, useEffect, useCallback } from "react";
 import type { Location } from "../types/location";
 import { COUNTRY_NAME_BY_CODE } from "../data/countries";
@@ -21,6 +21,7 @@ export function SearchBar({ onCitySelect }: SearchBarProps) {
     if (!searchQuery.trim()) {
       setSuggestions([]);
       setActiveIndex(-1);
+      setError(null);
       return;
     }
 
@@ -40,7 +41,10 @@ export function SearchBar({ onCitySelect }: SearchBarProps) {
       setSuggestions(data);
       setActiveIndex(data.length > 0 ? 0 : -1);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+      if (err instanceof Error && err.name === "AbortError") return;
+      setError(
+        "Unable to load city suggestions. Check your connection and try again."
+      );
       setSuggestions([]);
       setActiveIndex(-1);
     } finally {
@@ -77,6 +81,11 @@ export function SearchBar({ onCitySelect }: SearchBarProps) {
     setActiveIndex(-1);
     setError(null);
     onCitySelect(null);
+  };
+
+  const handleRetry = () => {
+    if (!query.trim()) return;
+    fetchSuggestions(query);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -128,13 +137,28 @@ export function SearchBar({ onCitySelect }: SearchBarProps) {
           className="bg-carbon-gray-90 text-white rounded-lg"
         />
         {isLoading && (
-          <div className="absolute top-full left-0 right-0 bg-white rounded-b-lg shadow-lg p-3 text-sm text-carbon-gray-80">
-            Loading...
+          <div className="absolute top-full left-0 right-0 bg-white rounded-b-lg shadow-lg p-3 text-sm text-carbon-gray-80 flex items-center gap-2">
+            <Loading
+              active
+              small
+              withOverlay={false}
+              description="Loading city suggestions"
+            />
+            <span>Searching cities...</span>
           </div>
         )}
         {error && (
-          <div className="absolute top-full left-0 right-0 bg-red-100 rounded-b-lg shadow-lg p-3 text-sm text-red-700">
-            {error}
+          <div className="absolute top-full left-0 right-0 bg-white rounded-b-lg shadow-lg p-3 text-sm text-carbon-gray-80">
+            <ActionableNotification
+              inline
+              kind="error"
+              lowContrast
+              title="Search unavailable"
+              subtitle={error}
+              hideCloseButton
+              actionButtonLabel="Retry"
+              onActionButtonClick={handleRetry}
+            />
           </div>
         )}
         {suggestions.length > 0 && (
