@@ -137,14 +137,14 @@ export function MixedDataCard({ weather, primaryUnit }: MixedDataCardProps) {
   ];
 
   return (
-    <div className="space-y-6">
-      <div className="bg-white border border-carbon-gray-20">
+    <div className="space-y-6 h-full">
+      <div className="bg-white border border-carbon-gray-20 h-full flex flex-col">
         <div className="border-b border-carbon-gray-20 px-6 py-4">
           <h2 className="text-carbon-gray-100 font-medium text-lg m-0">
             Atmospheric Data
           </h2>
         </div>
-        <div className="p-6">
+        <div className="p-6 flex-1 flex flex-col">
           <Theme theme="g10">
             <DataTable rows={rows} headers={headers}>
               {({
