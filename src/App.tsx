@@ -89,7 +89,7 @@ function App() {
             countryName={countryName}
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 mb-24 items-stretch">
           {weather ? (
             <>
               <MixedDataCard weather={weather} primaryUnit={primaryUnit} />

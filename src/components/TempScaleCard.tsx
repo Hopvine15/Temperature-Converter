@@ -41,29 +41,29 @@ export function TempScaleCard({ weather }: TempScaleCardProps) {
     "linear-gradient(90deg, #4589ff 0%, #42be65 30%, #f1c21b 50%, #da1e28 100%)";
 
   return (
-    <div className="space-y-6">
-      <div className="bg-white border border-carbon-gray-20">
+    <div className="space-y-6 h-full">
+      <div className="bg-white border border-carbon-gray-20 h-full flex flex-col">
         <div className="border-b border-carbon-gray-20 px-6 py-4">
           <h2 className="text-carbon-gray-100 font-medium text-lg m-0">
             Temperature Scale
           </h2>
         </div>
-        <div className="p-6">
+        <div className="p-6 flex-1 flex flex-col">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Tile className="p-4">
+            <Tile className="p-5 py-7">
               <p className="mb-1 text-xs text-carbon-gray-70">Celsius</p>
               <p className="text-2xl font-mono text-carbon-gray-100">
-                {weather.tempC.toFixed(1)}°C
+                {weather.tempC.toFixed(2)}°C
               </p>
             </Tile>
-            <Tile className="p-4">
+            <Tile className="p-5 py-7">
               <p className="mb-1 text-xs text-carbon-gray-70">Fahrenheit</p>
               <p className="text-2xl font-mono text-carbon-gray-100">
-                {weather.tempF.toFixed(1)}°F
+                {weather.tempF.toFixed(2)}°F
               </p>
             </Tile>
           </div>
-          <div className="mt-6  border border-carbon-gray-20 bg-carbon-gray-10 p-4">
+          <div className="mt-6 border border-carbon-gray-20 bg-carbon-gray-10 p-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-sm text-carbon-gray-90 m-0">
                 Temperature Classification
@@ -121,7 +121,8 @@ export function TempScaleCard({ weather }: TempScaleCardProps) {
               })}
             </div>
           </div>
-          <div className="mt-6">
+          {/* Conversion formulas box */}
+          <div className="mt-7">
             <Tile
               className="bg-carbon-gray-10 p-4 border-l-2 border-carbon-gray-20"
               style={{ borderLeftColor: "var(--carbon-blue-60)" }}
@@ -134,6 +135,16 @@ export function TempScaleCard({ weather }: TempScaleCardProps) {
                 <span>°C = (°F - 32) x 5/9</span>
               </div>
             </Tile>
+          </div>
+
+          {/* Educational / disclaimer text */}
+          <div className="mt-6 border border-carbon-gray-20 bg-carbon-gray-20 px-3 py-2 text-xs text-carbon-gray-70">
+            <span className="font-semibold text-carbon-gray-90">
+              Note:
+            </span>{" "}
+            <span className="text-carbon-gray-70">
+               Temperature classifications are approximate and may vary based on personal comfort, humidity, wind chill, and regional climate adaptation
+            </span>
           </div>
         </div>
       </div>
